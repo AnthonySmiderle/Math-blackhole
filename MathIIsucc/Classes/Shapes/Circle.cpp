@@ -1,7 +1,7 @@
 
 #include "Circle.h"
 
-Blackhole::Blackhole(Scene* parentScene, Vec2 position, Vec2 offset, float radius, float mass,Color4F color)
+S_Dot::S_Dot(Scene* parentScene, Vec2 position, Vec2 offset, float radius, float mass,Color4F color)
 {
 	this->parentScene = parentScene;
 
@@ -28,14 +28,14 @@ Blackhole::Blackhole(Scene* parentScene, Vec2 position, Vec2 offset, float radiu
 	parentScene->addChild(drawNode);
 }
 
-Blackhole::~Blackhole()
+S_Dot::~S_Dot()
 {
 	parentScene->removeChild(drawNode);
 
 	drawNode = nullptr;
 }
 
-void Blackhole::setPosition(Vec2 position)
+void S_Dot::setPosition(Vec2 position)
 {
 	this->position = position;
 
@@ -45,56 +45,56 @@ void Blackhole::setPosition(Vec2 position)
 	}
 }
 
-void Blackhole::update(float dt)
+void S_Dot::update(float dt)
 {
-	force = Vec2(0.0f, mass*-98.0f);
+	//force = Vec2(0.0f, mass*-98.0f);
 	acceleration = force / mass;
 	velocity += acceleration * dt;
 
 	setPosition(position  +(velocity*dt));
 }
 
-Vec2 Blackhole::getVelocity() const
+Vec2 S_Dot::getVelocity() const
 {
 	return velocity;
 }
 
-Vec2 Blackhole::getAccel() const
+Vec2 S_Dot::getAccel() const
 {
 	return acceleration;
 }
 
-Vec2 Blackhole::getForce() const
+Vec2 S_Dot::getForce() const
 {
 	return force;
 }
 
-float Blackhole::getMass() const
+float S_Dot::getMass() const
 {
 	return mass;
 }
 
-void Blackhole::setVelocity(Vec2 v)
+void S_Dot::setVelocity(Vec2 v)
 {
 	velocity = v;
 }
 
-void Blackhole::setAccel(Vec2 a)
+void S_Dot::setAccel(Vec2 a)
 {
 	acceleration = a;
 }
 
-void Blackhole::setForce(Vec2 f)
+void S_Dot::setForce(Vec2 f)
 {
 	force = f;
 }
 
-void Blackhole::setMass(float m)
+void S_Dot::setMass(float m)
 {
 	mass = m;
 }
 
-bool Blackhole::checkCollision(const Blackhole & other)
+bool S_Dot::checkCollision(const S_Dot & other)
 {
 	///code from gdw
 	float distance = sqrt((this->position.x - other.position.x)*(this->position.x - other.position.x) +

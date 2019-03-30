@@ -3,11 +3,11 @@
 #include "cocos2d.h"
 using namespace cocos2d;
 
-class Blackhole
+class S_Dot
 {
 public:
-	Blackhole(Scene* parentScene, Vec2 position, Vec2 offset, float radius,float mass, Color4F color);
-	~Blackhole();
+	S_Dot(Scene* parentScene, Vec2 position, Vec2 offset, float radius,float mass, Color4F color);
+	~S_Dot();
 
 	void setPosition(Vec2 position);
 
@@ -30,7 +30,7 @@ public:
 	void setForce(Vec2);
 	void setMass(float);
 
-	bool checkCollision(const Blackhole& other);
+	bool checkCollision(const S_Dot& other);
 
 private:
 	Scene* parentScene = nullptr;

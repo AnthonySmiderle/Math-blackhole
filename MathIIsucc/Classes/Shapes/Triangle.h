@@ -20,6 +20,7 @@ public:
 			Vec2(0, 1).getNormalized() * (size * 0.5f),
 			color
 		);
+		mass = 10.0f;
 
 		// Set Position
 		setPosition(Position);
@@ -37,16 +38,18 @@ public:
 	{
 		return Position;
 	}
-
+	float getMass() const {
+		return mass;
+	}
 	//code from our gdw game
 	void setForce(const cocos2d::Vec2& v) {
 		velocity = v;
 	}
-	void addForce(const cocos2d::Vec2& v) {
+	void addForce(const cocos2d::Vec2& v,float dt) {
 		int maxVelocity = 4;
 		int minVelocity = -4;
 
-		velocity += v / 10;
+		velocity += v*dt;//acceleration 
 
 		if (velocity.x >= maxVelocity)
 			velocity.x = maxVelocity;
@@ -69,6 +72,7 @@ public:
 private:
 	DrawNode* drawNode = nullptr;
 
+	float mass;
 	cocos2d::Vec2 velocity;
 	Vec2 Position;
 };

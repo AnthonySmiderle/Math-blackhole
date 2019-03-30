@@ -12,6 +12,9 @@ using namespace cocos2d;
 #include "XinputManager.h"
 #include <vector>
 
+#define c 200
+#define G 1
+
 // If you want to change the size of your window,
 // look for this:
 // DISPLAY->init(1024, 512, "Assignment 2", false, 1.0f);
@@ -28,10 +31,18 @@ public:
 
 	//--- Init Functions ---//
 	void initSceneObjects();
-	void checkSamePosition(std::vector<Blackhole*>& blackholes);
+	void checkSamePosition(std::vector<S_Dot*>& blackholes);
+	void spawnBlackholes();
+	void checkPlayerInput(float dt);
 
+	void gravitate(S_Dot & s, S_Dot & t);
+	void gravitate(const S_Dot& s, const BasecodeTriangle& t);
 
 private:
+	unsigned levelNumber = 1; 
+	Vec2 windowSize;
+
+	unsigned numBlackholes = 5;//??
 	bool mouseCheck;
 	Sedna::XinputManager manager;
 	Sedna::XinputController* p1;
@@ -49,10 +60,12 @@ private:
 
 	//--- Scene Object References ---//
 	BasecodeTriangle* T1;
-	std::vector<Blackhole*> blackholes;
-	Blackhole* C1;
+	std::vector<S_Dot*> blackholes;
+	S_Dot* C1;
 
 	BasecodeText* text1;
 };
 
 #endif
+
+
