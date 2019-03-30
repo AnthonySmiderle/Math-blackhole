@@ -10,6 +10,7 @@ using namespace cocos2d;
 #include "Classes/Shapes/Triangle.h"
 #include "Classes/Shapes/Text.h"
 #include "XinputManager.h"
+#include <vector>
 
 // If you want to change the size of your window,
 // look for this:
@@ -27,6 +28,7 @@ public:
 
 	//--- Init Functions ---//
 	void initSceneObjects();
+	void checkSamePosition(std::vector<Blackhole*>& blackholes);
 
 
 private:
@@ -46,9 +48,11 @@ private:
 	Label* label_Angle;
 
 	//--- Scene Object References ---//
-	C_Triangle* T1;
-	C_Circle* C1;
-	C_Text* text1;
+	BasecodeTriangle* T1;
+	std::vector<Blackhole*> blackholes;
+	Blackhole* C1;
+
+	BasecodeText* text1;
 };
 
 #endif

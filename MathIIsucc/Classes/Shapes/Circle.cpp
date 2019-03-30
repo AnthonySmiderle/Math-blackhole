@@ -1,7 +1,7 @@
 
 #include "Circle.h"
 
-C_Circle::C_Circle(Scene* parentScene, Vec2 position, Vec2 offset, float radius, float mass,Color4F color)
+Blackhole::Blackhole(Scene* parentScene, Vec2 position, Vec2 offset, float radius, float mass,Color4F color)
 {
 	this->parentScene = parentScene;
 
@@ -28,14 +28,14 @@ C_Circle::C_Circle(Scene* parentScene, Vec2 position, Vec2 offset, float radius,
 	parentScene->addChild(drawNode);
 }
 
-C_Circle::~C_Circle()
+Blackhole::~Blackhole()
 {
 	parentScene->removeChild(drawNode);
 
 	drawNode = nullptr;
 }
 
-void C_Circle::setPosition(Vec2 position)
+void Blackhole::setPosition(Vec2 position)
 {
 	this->position = position;
 
@@ -45,7 +45,7 @@ void C_Circle::setPosition(Vec2 position)
 	}
 }
 
-void C_Circle::update(float dt)
+void Blackhole::update(float dt)
 {
 	force = Vec2(0.0f, mass*-98.0f);
 	acceleration = force / mass;
@@ -54,42 +54,54 @@ void C_Circle::update(float dt)
 	setPosition(position  +(velocity*dt));
 }
 
-Vec2 C_Circle::getVelocity() const
+Vec2 Blackhole::getVelocity() const
 {
 	return velocity;
 }
 
-Vec2 C_Circle::getAccel() const
+Vec2 Blackhole::getAccel() const
 {
 	return acceleration;
 }
 
-Vec2 C_Circle::getForce() const
+Vec2 Blackhole::getForce() const
 {
 	return force;
 }
 
-float C_Circle::getMass() const
+float Blackhole::getMass() const
 {
 	return mass;
 }
 
-void C_Circle::setVelocity(Vec2 v)
+void Blackhole::setVelocity(Vec2 v)
 {
 	velocity = v;
 }
 
-void C_Circle::setAccel(Vec2 a)
+void Blackhole::setAccel(Vec2 a)
 {
 	acceleration = a;
 }
 
-void C_Circle::setForce(Vec2 f)
+void Blackhole::setForce(Vec2 f)
 {
 	force = f;
 }
 
-void C_Circle::setMass(float m)
+void Blackhole::setMass(float m)
 {
 	mass = m;
+}
+
+bool Blackhole::checkCollision(const Blackhole & other)
+{
+	///code from gdw
+	float distance = sqrt((this->position.x - other.position.x)*(this->position.x - other.position.x) +
+		(this->position.y - other.position.y)*(this->position.y - other.position.y));
+
+	if (distance <= (this->radius + other.radius))
+		return true;
+
+	return false;
 }

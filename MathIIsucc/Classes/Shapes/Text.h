@@ -5,10 +5,10 @@ using namespace cocos2d;
 
 #include <string>
 
-class C_Text
+class BasecodeText
 {
 public:
-	C_Text(
+	BasecodeText(
 		Scene* parentScene,
 		const std::string& text,
 		const std::string& font_directory,

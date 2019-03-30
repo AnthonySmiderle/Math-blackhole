@@ -1,12 +1,12 @@
 #pragma once
-
+#include <iostream>
 #include "cocos2d.h"
 using namespace cocos2d;
 
-class C_Triangle
+class BasecodeTriangle
 {
 public:
-	C_Triangle(Scene* parentScene, Vec2 Position, float size, Color4F color = Color4F::RED)
+	BasecodeTriangle(Scene* parentScene, Vec2 Position, float size, Color4F color = Color4F::RED)
 	{
 		this->Position = Position;
 
@@ -38,9 +38,37 @@ public:
 		return Position;
 	}
 
+	//code from our gdw game
+	void setForce(const cocos2d::Vec2& v) {
+		velocity = v;
+	}
+	void addForce(const cocos2d::Vec2& v) {
+		int maxVelocity = 4;
+		int minVelocity = -4;
+
+		velocity += v / 10;
+
+		if (velocity.x >= maxVelocity)
+			velocity.x = maxVelocity;
+		else if (velocity.x <= minVelocity)
+			velocity.x = minVelocity;
+		if (velocity.y >= maxVelocity)
+			velocity.y = maxVelocity;
+		else if (velocity.y <= minVelocity)
+			velocity.y = minVelocity;
+	}
+
+
+	void update(float dt) {
+
+		Position += velocity;
+		drawNode->setPosition(Position);
+		///std::cout << Position.x<<" "<<Position.y<<"\n";
+	}
 
 private:
 	DrawNode* drawNode = nullptr;
 
+	cocos2d::Vec2 velocity;
 	Vec2 Position;
 };

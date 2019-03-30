@@ -54,25 +54,47 @@ void MainScene::initSceneObjects()
 	//Store the window dimensions so we don't have to call the same function a bunch of times
 	Vec2 windowSize = DISPLAY->getWindowSizeAsVec2();
 
-	T1 = new C_Triangle(this, Vec2(100, 100), 30.0f);
-	C1 = new C_Circle(this, Vec2(200, 100), Vec2(0, 0), 30.0f, 10.0f, Color4F::BLACK);
+	T1 = new BasecodeTriangle(this, Vec2(100, 100), 30.0f);
+	C1 = new Blackhole(this, Vec2(200, 100), Vec2(0, 0), 30.0f, 10.0f, Color4F::BLACK);
 
-	text1 = new C_Text(this, "1234567890", "fonts/arial.ttf", 15.0f, Vec2(0, 300));
+	text1 = new BasecodeText(this, "1234567890", "fonts/arial.ttf", 15.0f, Vec2(0, 300));
 }
 
-void MainScene::update(float deltaTime)
+void MainScene::checkSamePosition(std::vector<Blackhole*>& blackholes)
+{
+	for (unsigned int i = 0; i < blackholes.size(); i++) {
+			for (unsigned int j = 0; j < blackholes.size(); j++) {
+				if (i == j)
+					continue;
+				if (blackholes[i]->checkCollision(*blackholes[j])) {
+					blackholes[i]->setPosition(
+						cocos2d::Vec2(100 + (rand() % 300),
+							blackholes[i]->getPosition().y + 50));
+					checkSamePosition(blackholes);
+				}
+
+			}
+
+	}
+}
+
+void MainScene::update(float dt)
 {
 	manager.update();
 	p1->updateSticks(p1Sticks);
 
 	if (p1Sticks[0].x < -0.3f || INPUTS->getKey(KeyCode::KEY_A))
-		T1->setPosition(T1->getPosition() - Vec2(10.0f, 0.0f));
+		T1->addForce(cocos2d::Vec2(-10, 0));
 	else if (p1Sticks[0].x > 0.3f || INPUTS->getKey(KeyCode::KEY_D))
-		T1->setPosition(T1->getPosition() + Vec2(10.0f, 0.0f));
+		T1->addForce(cocos2d::Vec2(10, 0));
+
 	if (p1Sticks[0].y < -0.3f || INPUTS->getKey(KeyCode::KEY_S))
-		T1->setPosition(T1->getPosition() - Vec2(0.0f, 10.0f));
+		T1->addForce(cocos2d::Vec2(0, -10));
+
 	else if (p1Sticks[0].y > 0.3f || INPUTS->getKey(KeyCode::KEY_W))
-		T1->setPosition(T1->getPosition() + Vec2(0.0f, 10.0f));
+		T1->addForce(cocos2d::Vec2(0, 10));
+
+	T1->update(dt);
 
 	Vec2 Mpos = INPUTS->getMousePosition();
 
@@ -82,17 +104,17 @@ void MainScene::update(float deltaTime)
 	float distance = sqrt((distX*distX) + (distY*distY));
 
 	if (INPUTS->getMouseButton(MouseButton::BUTTON_LEFT)) {
-		if (distance <= C1->getRadius()) 
+		if (distance <= C1->getRadius())
 			mouseCheck = true;
-		
+
 	}
-		else
-			mouseCheck = false;
-	if(mouseCheck)
-	C1->setPosition(Mpos);
+	else
+		mouseCheck = false;
+	if (mouseCheck)
+		C1->setPosition(Mpos);
 
 	if (C1->getPosition().y > C1->getRadius())
-		C1->update(deltaTime);
+		C1->update(dt);
 	else
 		C1->setVelocity(Vec2(0.0f, 0.0f));
 	text1->setText(std::to_string(C1->getVelocity().x) + ", " + std::to_string(C1->getVelocity().y));
