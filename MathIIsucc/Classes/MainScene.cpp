@@ -64,12 +64,15 @@ void MainScene::initSceneObjects()
 	spawnParticles();
 
 	//text1 = new BasecodeText(this, std::to_string(levelNumber), "fonts/arial.ttf", 15.0f, Vec2(0, 300));
-	levelLabel = cocos2d::Label::create(std::to_string(levelNumber), "fonts/arial.ttf", 18);
-	levelLabel->setPosition(cocos2d::Vec2(250, 800));
+	levelLabel = cocos2d::Label::create(std::to_string(levelNumber), "fonts/arial.ttf", 50);
+	levelLabel->setPosition(cocos2d::Vec2(200, 900));
+	levelLabel->setColor(cocos2d::Color3B::BLACK);
+	levelLabel->setVisible(true);
 
 	gameoverLabel = cocos2d::Label::create("Game Over", "fonts/arial.ttf", 30);
-	gameoverLabel->setPosition(cocos2d::Vec2(500, 800));
+	gameoverLabel->setPosition(cocos2d::Vec2(300, 500));
 	gameoverLabel->setVisible(false);
+	gameoverLabel->setColor(cocos2d::Color3B::BLACK);
 
 	this->addChild(levelLabel);
 	this->addChild(gameoverLabel);
@@ -111,16 +114,16 @@ void MainScene::spawnBlackholes()
 void MainScene::checkPlayerInput(float dt)
 {
 	static bool one = false, two = false, three = false;
-	if (p1Sticks[0].x < -0.3f || INPUTS->getKey(KeyCode::KEY_A))
+	if (p1Sticks[0].x < -0.3f || INPUTS->getKey(KeyCode::KEY_LEFT_ARROW))
 		T1->addForce(cocos2d::Vec2(-15, 0), dt);
 
-	else if (p1Sticks[0].x > 0.3f || INPUTS->getKey(KeyCode::KEY_D))
+	else if (p1Sticks[0].x > 0.3f || INPUTS->getKey(KeyCode::KEY_RIGHT_ARROW))
 		T1->addForce(cocos2d::Vec2(15, 0), dt);
 
-	if (p1Sticks[0].y < -0.3f || INPUTS->getKey(KeyCode::KEY_S))
+	if (p1Sticks[0].y < -0.3f || INPUTS->getKey(KeyCode::KEY_DOWN_ARROW))
 		T1->addForce(cocos2d::Vec2(0, -15), dt);
 
-	else if (p1Sticks[0].y > 0.3f || INPUTS->getKey(KeyCode::KEY_W))
+	else if (p1Sticks[0].y > 0.3f || INPUTS->getKey(KeyCode::KEY_UP_ARROW))
 		T1->addForce(cocos2d::Vec2(0, 15), dt);
 
 
@@ -133,10 +136,10 @@ void MainScene::spawnParticles()
 		particles.erase(particles.begin() + i);
 		i--;
 	}
-	for (int i = 0; i < 50; ++i) {
+	for (int i = 0; i < 100; ++i) {
 		auto r = 5 + rand() % 10;
 		auto mass = ((c*c) / 2 * G) * r;
-		particles.push_back(new S_Dot(this, cocos2d::Vec2(rand() % (int)windowSize.x, rand() % (int)windowSize.y), cocos2d::Vec2(0, 0), r, mass, cocos2d::Color4F(0.5f +rand() % 2, 0.5f + rand() % 2, 0.5f + rand() % 2, 1)));
+		particles.push_back(new S_Dot(this, cocos2d::Vec2(rand() % (int)windowSize.x, rand() % (int)windowSize.y), cocos2d::Vec2(0, 0), r, mass, cocos2d::Color4F(0.5f + rand() % 2, 0.5f + rand() % 2, 0.5f + rand() % 2, 1)));
 	}
 }
 
@@ -165,7 +168,7 @@ void MainScene::gravitate(S_Dot & s, BasecodeTriangle & t, float dt)
 
 
 	///<gravitation woooooooooooooo>
-	t.addForce(((-(G*M*m) / (r * r*r)) * R) / 50, dt);
+	t.addForce(((-(G*M*m) / (r * r*r)) * R) / 30, dt);
 }
 
 void MainScene::update(float dt)
@@ -178,6 +181,11 @@ void MainScene::update(float dt)
 		spawnParticles();
 	}
 
+	if (particles.size() < 100) {
+		auto r = 5 + rand() % 10;
+		auto mass = ((c*c) / 2 * G) * r;
+		particles.push_back(new S_Dot(this, cocos2d::Vec2(rand() % (int)windowSize.x, rand() % (int)windowSize.y), cocos2d::Vec2(0, 0), r, mass, cocos2d::Color4F(0.5f + rand() % 2, 0.5f + rand() % 2, 0.5f + rand() % 2, 1)));
+	}
 	checkPlayerInput(dt);
 
 	for (int i = 0; i < blackholes.size(); ++i) {
@@ -192,19 +200,27 @@ void MainScene::update(float dt)
 
 	T1->update(dt);
 
-	std::cout << T1->getPosition().y << "\n";
-	if (T1->getPosition().y >= 1000) {
+	if (T1->getPosition().y >= 1100) {
 		T1->setPosition(cocos2d::Vec2(700, 30));
 		levelNumber++;
+		levelLabel->setString(std::to_string(levelNumber));
 	}
 
 	for (unsigned i = 0; i < blackholes.size(); ++i) {
-		if (T1->checkCollision(blackholes[i]->getDrawnode()))
+		if (blackholes[i]->checkCollision(*T1->getBox()))
 		{
 			T1->setPosition(cocos2d::Vec2(700, 30));
+			T1->setForce(cocos2d::Vec2(0, 0));
 			T1->lives--;
 			if (T1->lives == 0) {
-				gameoverLabel->setVisible(true)''
+				gameoverLabel->setVisible(true);
+			}
+		}
+		for (unsigned j = 0; j < particles.size(); ++j) {
+			if (blackholes[i]->checkCollision(*particles[j])) {
+				delete particles[j];
+				particles.erase(particles.begin() + j);
+				j--;
 			}
 		}
 	}

@@ -68,6 +68,9 @@ private:
 
 	cocos2d::Label* levelLabel;
 	cocos2d::Label* gameoverLabel;
+
+	float gameoverTimer = 0.0f;
+	bool hasEnded = false;
 };
 
 #endif

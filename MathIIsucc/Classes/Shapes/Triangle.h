@@ -14,6 +14,8 @@ public:
 		// Create Node
 		drawNode = DrawNode::create();
 
+		hitbox = new S_Dot(parentScene, Position, cocos2d::Vec2(0, 0), 5, 1, cocos2d::Color4F::WHITE);
+		
 		// Add Triangle
 		drawNode->drawTriangle(
 			Vec2(-1, -1).getNormalized() * (size * 0.5f),
@@ -22,6 +24,8 @@ public:
 			color
 		);
 		mass = 10.0f;
+
+
 
 		// Set Position
 		setPosition(Position);
@@ -67,18 +71,19 @@ public:
 
 		Position += velocity;
 		drawNode->setPosition(Position);
+		hitbox->setPosition(Position);
 		///std::cout << Position.x<<" "<<Position.y<<"\n";
 	}
-	bool checkCollision(cocos2d::DrawNode* d) {
-		if (this->Position == d->getPosition())
-			return true;
-		return false;
+	
+	S_Dot* getBox() const {
+		return hitbox;
 	}
 
 	unsigned lives = 3;
 private:
 	DrawNode* drawNode = nullptr;
 
+	S_Dot* hitbox;
 	float mass;
 	cocos2d::Vec2 velocity;
 	Vec2 Position;
