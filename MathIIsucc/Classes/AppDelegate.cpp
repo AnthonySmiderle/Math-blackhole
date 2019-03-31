@@ -24,7 +24,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	//The title of the window is "Demo Scene for Cocos2D". This shows up on the toolbar at the top of the window
 	//We do not want it fullscreen right now. If we did, our resolution parameters would be overwritten
 	//The 2.0x zoom factor simply scales up our window so it is easier to see and work with. The window itself is 2x the size as well as everything being drawn inside it
-	DISPLAY->init(1024, 640, "Assignment 2", false, 1.0f);
+	DISPLAY->init(1920, 1080, "Assignment 2", false, 1.0f);
 
 	//Create our main scene and tell the director to use it
 	//The director is Cocos2D's game management system. It controls the scene switching, creating, etc. It is a singleton so there is only one instance of the class and it can be used everywhere

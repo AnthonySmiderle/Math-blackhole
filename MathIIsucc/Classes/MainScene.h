@@ -34,15 +34,16 @@ public:
 	void checkSamePosition(std::vector<S_Dot*>& blackholes);
 	void spawnBlackholes();
 	void checkPlayerInput(float dt);
+	void spawnParticles();
 
 	void gravitate(S_Dot & s, S_Dot & t);
-	void gravitate(const S_Dot& s, const BasecodeTriangle& t);
+	void gravitate(S_Dot& s, BasecodeTriangle& t,float dt);
 
 private:
 	unsigned levelNumber = 1; 
 	Vec2 windowSize;
 
-	unsigned numBlackholes = 5;//??
+	unsigned numBlackholes = 50;//??
 	bool mouseCheck;
 	Sedna::XinputManager manager;
 	Sedna::XinputController* p1;
@@ -61,9 +62,12 @@ private:
 	//--- Scene Object References ---//
 	BasecodeTriangle* T1;
 	std::vector<S_Dot*> blackholes;
-	S_Dot* C1;
+	std::vector<S_Dot*> particles;
 
 	BasecodeText* text1;
+
+	cocos2d::Label* levelLabel;
+	cocos2d::Label* gameoverLabel;
 };
 
 #endif

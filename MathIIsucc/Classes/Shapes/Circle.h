@@ -20,6 +20,10 @@ public:
 		return radius;
 	}
 
+	cocos2d::DrawNode* getDrawnode() const {
+		return drawNode;
+	}
+
 	Vec2 getVelocity() const;
 	Vec2 getAccel() const;
 	Vec2 getForce() const;

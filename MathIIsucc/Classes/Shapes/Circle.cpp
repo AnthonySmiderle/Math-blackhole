@@ -48,7 +48,7 @@ void S_Dot::setPosition(Vec2 position)
 void S_Dot::update(float dt)
 {
 	//force = Vec2(0.0f, mass*-98.0f);
-	acceleration = force / mass;
+	acceleration = (force / mass) / 1000;//only do this cause otherwise its really hard to see everything
 	velocity += acceleration * dt;
 
 	setPosition(position  +(velocity*dt));

@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "cocos2d.h"
+#include "Circle.h"
 using namespace cocos2d;
 
 class BasecodeTriangle
@@ -43,7 +44,7 @@ public:
 	}
 	//code from our gdw game
 	void setForce(const cocos2d::Vec2& v) {
-		velocity = v;
+		velocity = v / 1000;
 	}
 	void addForce(const cocos2d::Vec2& v,float dt) {
 		int maxVelocity = 4;
@@ -68,7 +69,13 @@ public:
 		drawNode->setPosition(Position);
 		///std::cout << Position.x<<" "<<Position.y<<"\n";
 	}
+	bool checkCollision(cocos2d::DrawNode* d) {
+		if (this->Position == d->getPosition())
+			return true;
+		return false;
+	}
 
+	unsigned lives = 3;
 private:
 	DrawNode* drawNode = nullptr;
 
