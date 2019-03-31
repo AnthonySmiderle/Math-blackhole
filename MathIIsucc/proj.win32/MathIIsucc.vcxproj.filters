@@ -10,9 +10,6 @@
     <Filter Include="src">
       <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\shapes">
-      <UniqueIdentifier>{edeb6233-b43d-434b-8b14-bffd4b562f7f}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -24,9 +21,6 @@
     <ClCompile Include="..\Classes\DisplayHandler.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\InputHandler.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -34,21 +28,18 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Shapes\Circle.cpp">
-      <Filter>src\shapes</Filter>
+      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Shapes\Lines.cpp">
-      <Filter>src\shapes</Filter>
+      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Shapes\Rectangle.cpp">
-      <Filter>src\shapes</Filter>
+      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Shapes\Text.cpp">
-      <Filter>src\shapes</Filter>
+      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Shapes\Triangle.cpp">
-      <Filter>src\shapes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\XinputManager.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,9 +53,6 @@
     <ClInclude Include="..\Classes\DisplayHandler.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\HelloWorldScene.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\InputHandler.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -72,21 +60,18 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Shapes\Circle.h">
-      <Filter>src\shapes</Filter>
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Shapes\Lines.h">
-      <Filter>src\shapes</Filter>
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Shapes\Rectangle.h">
-      <Filter>src\shapes</Filter>
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Shapes\Text.h">
-      <Filter>src\shapes</Filter>
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Shapes\Triangle.h">
-      <Filter>src\shapes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\XinputManager.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

@@ -9,7 +9,6 @@ using namespace cocos2d;
 #include "Classes/Shapes/Rectangle.h"
 #include "Classes/Shapes/Triangle.h"
 #include "Classes/Shapes/Text.h"
-#include "XinputManager.h"
 
 // If you want to change the size of your window,
 // look for this:
@@ -30,11 +29,6 @@ public:
 
 
 private:
-	bool mouseCheck;
-	Sedna::XinputManager manager;
-	Sedna::XinputController* p1;
-	Sedna::Stick p1Sticks[2];
-
 	//--- Cocos Engine References ---//
 	Director* director;
 

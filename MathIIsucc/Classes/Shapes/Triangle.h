@@ -6,7 +6,7 @@ using namespace cocos2d;
 class C_Triangle
 {
 public:
-	C_Triangle(Scene* parentScene, Vec2 Position, float size, Color4F color = Color4F::RED)
+	C_Triangle(Scene* parentScene, Vec2 Position, float size, Color4F color = Color4F::BLACK)
 	{
 		this->Position = Position;
 

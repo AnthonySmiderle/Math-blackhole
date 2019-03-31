@@ -1,7 +1,7 @@
 
 #include "Circle.h"
 
-C_Circle::C_Circle(Scene* parentScene, Vec2 position, Vec2 offset, float radius, float mass,Color4F color)
+C_Circle::C_Circle(Scene* parentScene, Vec2 position, Vec2 offset, float radius, Color4F color)
 {
 	this->parentScene = parentScene;
 
@@ -10,11 +10,6 @@ C_Circle::C_Circle(Scene* parentScene, Vec2 position, Vec2 offset, float radius,
 	this->offset = offset;
 	this->radius = radius;
 	this->color = color;
-	this->mass = mass;
-
-	velocity = Vec2(0.0f, 0.0f);
-	acceleration = Vec2(0.0f, 0.0f);
-	force = Vec2(0.0f, 0.0f);
 
 	// Create Node
 	drawNode = DrawNode::create();
@@ -43,53 +38,4 @@ void C_Circle::setPosition(Vec2 position)
 	{
 		drawNode->setPosition(position);
 	}
-}
-
-void C_Circle::update(float dt)
-{
-	force = Vec2(0.0f, mass*-98.0f);
-	acceleration = force / mass;
-	velocity += acceleration * dt;
-
-	setPosition(position  +(velocity*dt));
-}
-
-Vec2 C_Circle::getVelocity() const
-{
-	return velocity;
-}
-
-Vec2 C_Circle::getAccel() const
-{
-	return acceleration;
-}
-
-Vec2 C_Circle::getForce() const
-{
-	return force;
-}
-
-float C_Circle::getMass() const
-{
-	return mass;
-}
-
-void C_Circle::setVelocity(Vec2 v)
-{
-	velocity = v;
-}
-
-void C_Circle::setAccel(Vec2 a)
-{
-	acceleration = a;
-}
-
-void C_Circle::setForce(Vec2 f)
-{
-	force = f;
-}
-
-void C_Circle::setMass(float m)
-{
-	mass = m;
 }
