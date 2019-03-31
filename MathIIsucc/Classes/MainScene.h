@@ -2,17 +2,10 @@
 #define MAINSCENE_H
 
 #include "cocos2d.h"
+#include "PhysicsCircle.h"
 using namespace cocos2d;
 
-#include "Classes/Shapes/Circle.h"
-#include "Classes/Shapes/Lines.h"
-#include "Classes/Shapes/Rectangle.h"
-#include "Classes/Shapes/Triangle.h"
-#include "Classes/Shapes/Text.h"
-#include <vector>
-
-#define c 200
-#define G 1
+#define NUM_PLANETS 3
 
 class MainScene : public cocos2d::Scene
 {
@@ -24,46 +17,34 @@ public:
 	CREATE_FUNC(MainScene);
 
 	//--- Init Functions ---//
-	void initSceneObjects();
+	void initCocosReferences();
+	void initPrivateVariables();
+	void initScene();
 
+	//--- Update Functions ---//
+	void updatePlanets(float _dt);
 
-	//functions that do game specific things
-	void spawnBlackholes();
-	void spawnParticles();
-	void gravitate(S_Dot & s, S_Dot & t);
-	void gravitate(S_Dot& s, BasecodeTriangle& t,float dt);
-	void checkSamePosition(std::vector<S_Dot*>& blackholes);
-	void checkPlayerInput(float dt);
+	//--- Methods ---//
+	void applyGravityToPlanets();
 
 private:
-	unsigned levelNumber = 1; 
-	Vec2 windowSize;
-
-
 	//--- Cocos Engine References ---//
 	Director* director;
 
 	//--- Static Constants ---//
-	const static float degToRad;
-	const static float radToDeg;
+	static float degToRad;
+	static float radToDeg;
+	static float gravity;
 
 	//--- Private Variables ---//
-	Label* label_Angle;
+	Vec2 sunPosition;
+	float sunRadius;
+	float M;
+	float G;
 
 	//--- Scene Object References ---//
-	BasecodeTriangle* T1;
-	std::vector<S_Dot*> blackholes;
-	std::vector<S_Dot*> particles;
-
-	BasecodeText* text1;
-
-	cocos2d::Label* levelLabel;
-	cocos2d::Label* gameoverLabel;
-
-	float gameoverTimer = 0.0f;
-	bool hasEnded = false;
+	PhysicsCircle sun;
+	PhysicsCircle planets[NUM_PLANETS];
 };
 
 #endif
-
-

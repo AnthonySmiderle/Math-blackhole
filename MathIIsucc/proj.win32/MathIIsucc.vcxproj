@@ -153,11 +153,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\DisplayHandler.cpp" />
     <ClCompile Include="..\Classes\InputHandler.cpp" />
     <ClCompile Include="..\Classes\MainScene.cpp" />
-    <ClCompile Include="..\Classes\Shapes\Circle.cpp" />
-    <ClCompile Include="..\Classes\Shapes\Lines.cpp" />
-    <ClCompile Include="..\Classes\Shapes\Rectangle.cpp" />
-    <ClCompile Include="..\Classes\Shapes\Text.cpp" />
-    <ClCompile Include="..\Classes\Shapes\Triangle.cpp" />
+    <ClCompile Include="..\Classes\PhysicsCircle.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -165,11 +161,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\DisplayHandler.h" />
     <ClInclude Include="..\Classes\InputHandler.h" />
     <ClInclude Include="..\Classes\MainScene.h" />
-    <ClInclude Include="..\Classes\Shapes\Circle.h" />
-    <ClInclude Include="..\Classes\Shapes\Lines.h" />
-    <ClInclude Include="..\Classes\Shapes\Rectangle.h" />
-    <ClInclude Include="..\Classes\Shapes\Text.h" />
-    <ClInclude Include="..\Classes\Shapes\Triangle.h" />
+    <ClInclude Include="..\Classes\PhysicsCircle.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
