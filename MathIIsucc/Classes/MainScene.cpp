@@ -4,8 +4,6 @@
 #include <iostream>
 #include <stdio.h>
 
-
-
 //--- Static Constants ---//
 const float MainScene::degToRad = 3.14159f / 180.0f;
 const float MainScene::radToDeg = 180.0f / 3.14159f;
@@ -39,8 +37,6 @@ bool MainScene::init()
 	//Make the background of our scene white instead of the default black
 	director->setClearColor(Color4F(255, 255, 255, 255));
 
-	p1 = manager.getController(0);
-	manager.update();
 
 	//Schedule the use of the update function so the function actually gets called
 	this->scheduleUpdate();
@@ -56,19 +52,22 @@ void MainScene::initSceneObjects()
 {
 	//Store the window dimensions so we don't have to call the same function a bunch of times
 	windowSize = DISPLAY->getWindowSizeAsVec2();
+	//make the player
 	T1 = new BasecodeTriangle(this, Vec2(250, 100), 30.0f);
 	T1->setPosition(cocos2d::Vec2(700, 30));
 
+	//spawn stuff
 	srand(time(0));
 	spawnBlackholes();
 	spawnParticles();
 
-	//text1 = new BasecodeText(this, std::to_string(levelNumber), "fonts/arial.ttf", 15.0f, Vec2(0, 300));
+	//create the level label
 	levelLabel = cocos2d::Label::create(std::to_string(levelNumber), "fonts/arial.ttf", 50);
 	levelLabel->setPosition(cocos2d::Vec2(200, 900));
 	levelLabel->setColor(cocos2d::Color3B::BLACK);
 	levelLabel->setVisible(true);
 
+	//create the gameover label
 	gameoverLabel = cocos2d::Label::create("Game Over", "fonts/arial.ttf", 30);
 	gameoverLabel->setPosition(cocos2d::Vec2(300, 500));
 	gameoverLabel->setVisible(false);
@@ -80,14 +79,15 @@ void MainScene::initSceneObjects()
 
 void MainScene::checkSamePosition(std::vector<S_Dot*>& blackholes)
 {
+	//check to see if the blackholes are spawned in the same position
 	for (unsigned int i = 0; i < blackholes.size(); i++) {
 		for (unsigned int j = 0; j < blackholes.size(); j++) {
 			if (i == j)
 				continue;
 			if (blackholes[i]->checkCollision(*blackholes[j])) {
-				blackholes[i]->setPosition(
-					cocos2d::Vec2(100 + (rand() % 300),
-						blackholes[i]->getPosition().y + 50));
+				//change the position of the blackhole
+				blackholes[i]->setPosition(cocos2d::Vec2(100 + (rand() % 300), blackholes[i]->getPosition().y + 50));
+				//do the whole process again until nothing is touching
 				checkSamePosition(blackholes);
 			}
 
@@ -98,14 +98,17 @@ void MainScene::checkSamePosition(std::vector<S_Dot*>& blackholes)
 
 void MainScene::spawnBlackholes()
 {
+	//delete all the previous blackholes
 	for (unsigned i = 0; i < blackholes.size(); ++i) {
 		delete blackholes[i];
 		blackholes.erase(blackholes.begin() + i);
 		i--;
 	}
+
+	//spawn blackholes, up to the number of the current level
 	for (int i = 0; i < levelNumber; ++i) {
-		auto r = 10 + rand() % 50;
-		auto mass = ((c*c) / 2 * G) * r;
+		auto r = 11 + rand() % 50;
+		auto mass = ((c*c) / (2 * G)) * r;
 		blackholes.push_back(new S_Dot(this, cocos2d::Vec2(rand() % (int)windowSize.x, rand() % (int)windowSize.y), cocos2d::Vec2(0, 0), r, mass, cocos2d::Color4F::BLACK));
 	}
 	checkSamePosition(blackholes);
@@ -113,24 +116,24 @@ void MainScene::spawnBlackholes()
 
 void MainScene::checkPlayerInput(float dt)
 {
-	static bool one = false, two = false, three = false;
-	if (p1Sticks[0].x < -0.3f || INPUTS->getKey(KeyCode::KEY_LEFT_ARROW))
+	//check to see if the player is pressing a certain key, then push them in that direction
+	if (INPUTS->getKey(KeyCode::KEY_LEFT_ARROW))
 		T1->addForce(cocos2d::Vec2(-15, 0), dt);
 
-	else if (p1Sticks[0].x > 0.3f || INPUTS->getKey(KeyCode::KEY_RIGHT_ARROW))
+	else if (INPUTS->getKey(KeyCode::KEY_RIGHT_ARROW))
 		T1->addForce(cocos2d::Vec2(15, 0), dt);
 
-	if (p1Sticks[0].y < -0.3f || INPUTS->getKey(KeyCode::KEY_DOWN_ARROW))
+	if (INPUTS->getKey(KeyCode::KEY_DOWN_ARROW))
 		T1->addForce(cocos2d::Vec2(0, -15), dt);
 
-	else if (p1Sticks[0].y > 0.3f || INPUTS->getKey(KeyCode::KEY_UP_ARROW))
+	else if (INPUTS->getKey(KeyCode::KEY_UP_ARROW))
 		T1->addForce(cocos2d::Vec2(0, 15), dt);
-
 
 }
 
 void MainScene::spawnParticles()
 {
+	//this function is the same as spawn blackholes, just spawns smaller dots that arent blackholes
 	for (unsigned i = 0; i < particles.size(); ++i) {
 		delete particles[i];
 		particles.erase(particles.begin() + i);
@@ -145,6 +148,7 @@ void MainScene::spawnParticles()
 
 void MainScene::gravitate(S_Dot & s, S_Dot & t)
 {
+	//set our givens to their appropriate values
 	auto M = s.getMass() > t.getMass() ? s.getMass() : t.getMass();
 	auto m = s.getMass() > t.getMass() ? t.getMass() : s.getMass();
 	auto R = s.getMass() > t.getMass() ? t.getPosition() - s.getPosition() : s.getPosition() - t.getPosition();
@@ -152,15 +156,18 @@ void MainScene::gravitate(S_Dot & s, S_Dot & t)
 
 
 	///<gravitation woooooooooooooo>
+	//set the force to the appropriate object
 	if (s.getMass() > t.getMass())
-		t.setForce(((-(G*M*m) / (r * r*r)) * R * 300));
+		t.setForce(((-(G*M*m) / (r * r*r)) * R));
 	else if (s.getMass() < t.getMass())
-		s.setForce(((-(G*M*m) / (r * r*r)) * R * 300));
+		s.setForce(((-(G*M*m) / (r * r*r)) * R));
 
 }
 
 void MainScene::gravitate(S_Dot & s, BasecodeTriangle & t, float dt)
 {
+	//this function is the same, but for the player specifically.
+	//we dont need to check which object to apply the force to, since the player will always have a smaller mass
 	auto M = s.getMass() > t.getMass() ? s.getMass() : t.getMass();
 	auto m = s.getMass() > t.getMass() ? t.getMass() : s.getMass();
 	auto R = t.getPosition() - s.getPosition();
@@ -173,21 +180,21 @@ void MainScene::gravitate(S_Dot & s, BasecodeTriangle & t, float dt)
 
 void MainScene::update(float dt)
 {
-	manager.update();
-	p1->updateSticks(p1Sticks);
 
+	//spawn blackholes if the size is not equal to the level number
 	if (blackholes.size() != levelNumber) {
 		spawnBlackholes();
 		spawnParticles();
 	}
 
+	//spawn more particles if there are less than 100
 	if (particles.size() < 100) {
 		auto r = 5 + rand() % 10;
 		auto mass = ((c*c) / 2 * G) * r;
 		particles.push_back(new S_Dot(this, cocos2d::Vec2(rand() % (int)windowSize.x, rand() % (int)windowSize.y), cocos2d::Vec2(0, 0), r, mass, cocos2d::Color4F(0.5f + rand() % 2, 0.5f + rand() % 2, 0.5f + rand() % 2, 1)));
 	}
-	checkPlayerInput(dt);
 
+	//gravitate the particles and the player, and update the blackholes and the particles
 	for (int i = 0; i < blackholes.size(); ++i) {
 		for (int j = 0; j < particles.size(); ++j) {
 			gravitate(*blackholes[i], *particles[j]);
@@ -198,25 +205,30 @@ void MainScene::update(float dt)
 
 	}
 
+	checkPlayerInput(dt);
 	T1->update(dt);
 
+	//if the player beats the level, go to the next one
 	if (T1->getPosition().y >= 1100) {
 		T1->setPosition(cocos2d::Vec2(700, 30));
+		T1->setForce(cocos2d::Vec2(0, 0));
 		levelNumber++;
 		levelLabel->setString(std::to_string(levelNumber));
 	}
 
+
 	for (unsigned i = 0; i < blackholes.size(); ++i) {
+		//check to see if the player is touching a blackhole
 		if (blackholes[i]->checkCollision(*T1->getBox()))
 		{
 			T1->setPosition(cocos2d::Vec2(700, 30));
 			T1->setForce(cocos2d::Vec2(0, 0));
 			T1->lives--;
-			if (T1->lives == 0) {
+			if (T1->lives == 0)
 				gameoverLabel->setVisible(true);
-			}
 		}
 		for (unsigned j = 0; j < particles.size(); ++j) {
+			//if particles are touching blackholes, remove them
 			if (blackholes[i]->checkCollision(*particles[j])) {
 				delete particles[j];
 				particles.erase(particles.begin() + j);
@@ -224,27 +236,4 @@ void MainScene::update(float dt)
 			}
 		}
 	}
-
-	///Vec2 Mpos = INPUTS->getMousePosition();
-	///
-	///float distX = Mpos.x - C1->getPosition().x;
-	///float distY = Mpos.y - C1->getPosition().y;
-	///
-	///float distance = sqrt((distX*distX) + (distY*distY));
-	///
-	///if (INPUTS->getMouseButton(MouseButton::BUTTON_LEFT)) {
-	///	if (distance <= C1->getRadius())
-	///		mouseCheck = true;
-	///
-	///}
-	///else
-	///	mouseCheck = false;
-	///if (mouseCheck)
-	///	C1->setPosition(Mpos);
-	///
-	///if (C1->getPosition().y > C1->getRadius())
-	///	C1->update(dt);
-	///else
-	///	C1->setVelocity(Vec2(0.0f, 0.0f));
-	///text1->setText(std::to_string(C1->getVelocity().x) + ", " + std::to_string(C1->getVelocity().y));
 }

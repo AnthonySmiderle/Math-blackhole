@@ -24,15 +24,9 @@ public:
 		return drawNode;
 	}
 
-	Vec2 getVelocity() const;
-	Vec2 getAccel() const;
-	Vec2 getForce() const;
 	float getMass() const;
 
-	void setVelocity(Vec2);
-	void setAccel(Vec2);
 	void setForce(Vec2);
-	void setMass(float);
 
 	bool checkCollision(const S_Dot& other);
 

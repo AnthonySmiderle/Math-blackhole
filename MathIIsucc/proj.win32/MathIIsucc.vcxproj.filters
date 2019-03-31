@@ -24,9 +24,6 @@
     <ClCompile Include="..\Classes\DisplayHandler.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\InputHandler.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -48,9 +45,6 @@
     <ClCompile Include="..\Classes\Shapes\Triangle.cpp">
       <Filter>src\shapes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\XinputManager.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -60,9 +54,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\DisplayHandler.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\HelloWorldScene.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\InputHandler.h">
@@ -85,9 +76,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Shapes\Triangle.h">
       <Filter>src\shapes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\XinputManager.h">
-      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
