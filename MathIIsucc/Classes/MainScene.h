@@ -5,10 +5,7 @@
 using namespace cocos2d;
 
 #include "Classes/Shapes/Circle.h"
-#include "Classes/Shapes/Lines.h"
-#include "Classes/Shapes/Rectangle.h"
 #include "Classes/Shapes/Triangle.h"
-#include "Classes/Shapes/Text.h"
 #include <vector>
 
 #define c 200
@@ -54,8 +51,6 @@ private:
 	BasecodeTriangle* T1;
 	std::vector<S_Dot*> blackholes;
 	std::vector<S_Dot*> particles;
-
-	BasecodeText* text1;
 
 	cocos2d::Label* levelLabel;
 	cocos2d::Label* gameoverLabel;

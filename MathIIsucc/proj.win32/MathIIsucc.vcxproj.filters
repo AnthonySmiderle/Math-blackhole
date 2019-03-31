@@ -33,15 +33,6 @@
     <ClCompile Include="..\Classes\Shapes\Circle.cpp">
       <Filter>src\shapes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Shapes\Lines.cpp">
-      <Filter>src\shapes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Shapes\Rectangle.cpp">
-      <Filter>src\shapes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Shapes\Text.cpp">
-      <Filter>src\shapes</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Shapes\Triangle.cpp">
       <Filter>src\shapes</Filter>
     </ClCompile>
@@ -63,15 +54,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Shapes\Circle.h">
-      <Filter>src\shapes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Shapes\Lines.h">
-      <Filter>src\shapes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Shapes\Rectangle.h">
-      <Filter>src\shapes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Shapes\Text.h">
       <Filter>src\shapes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Shapes\Triangle.h">
